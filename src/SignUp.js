@@ -14,10 +14,13 @@ const SignUp = () => {
         setFormData({ ...formData, [e.target.name]: e.target.value });
     };
 
-    const handleSubmit = (e) => {
+    const handleSubmit = async (e) => {
         e.preventDefault();
-        //todo
-        // Here you would typically send the formData to your backend for processing
+        const url = "http://localhost:1234/signUp?formData=" + JSON.stringify(formData) //todo fixing this to be the right backend URL
+        const res1 = await fetch(url, {
+            method: "POST",
+        })
+        await alert(res1)
         console.log('Form submitted:', formData);
     };
 
