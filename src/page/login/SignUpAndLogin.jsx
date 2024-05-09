@@ -13,16 +13,6 @@ const SignUpAndLogin = () => {
     const [pageState, setPageState] = useState('login')
     const navigate = useNavigate()
     const location = useLocation()
-    // const [counter, setCounter] = useState(0)
-    //edu code
-    // useEffect(() => {
-    //     //todo logic Outside
-    //     console.log(counter)
-    //     //todo when this component is deleted.
-    //     return () => {
-    //         console.log(counter)
-    //     }
-    // }, [counter]) //ctrl lifecycle react
 
     useEffect(() => {
         if(location.state && location.state.status){
