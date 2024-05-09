@@ -1,4 +1,4 @@
-import { useState } from "react";
+import {useEffect, useState} from "react";
 import { Button, Grid, TextField, Paper } from "@mui/material";
 import { useNavigate } from "react-router-dom";
 
@@ -28,6 +28,11 @@ const FieldAndValue = ({ onVarnameChange, onValueChange, id }) => {
 const ModelGenerator = () => {
     const [modelName, setModelName] = useState("");
     const [variables, setVariables] = useState([{ name: '', type: '' }]);
+    useEffect(() => {
+        console.log(variables)
+        }
+        ,[variables]
+    )
     const navigate = useNavigate();
     function addField() {
         setVariables([...variables, { name: '', type: '' }]);
