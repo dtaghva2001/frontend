@@ -7,7 +7,7 @@ const Loading = () => {
         <Box display="flex" justifyContent="center" alignItems="center" height="100vh" flexDirection="column" bgcolor={'gray'}>
             <CircularProgress size={80} color={'success'}/>
             <Typography variant="h6" sx={{ mt: 2 }}>
-                Preparing your file...
+                Preparing file...
             </Typography>
         </Box>
     );

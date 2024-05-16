@@ -3,10 +3,10 @@ import SignUpAndLogin from "./page/login/SignUpAndLogin";
 import './App.css'
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 import ModelGenerator from "./page/model_generator/ModelGenerator";
-import LoadingPage from "./page/model_generator/LoadingPage";
 import DownloadPage from "./page/model_generator/DownloadPage";
 import {UserHome} from "./page/user_home/UserHome";
 import {HomePage} from "./page/home_page/HomePage";
+import {BlogDetails} from "./page/home_page/BlogDetails";
 //
 const App = () => {
     return (
@@ -17,6 +17,7 @@ const App = () => {
                 <Route path="/model_generator" element={<ModelGenerator/>}/>
                 <Route path="/download" element={<DownloadPage />} />
                 <Route path="/" element={<HomePage/>}/>
+                <Route path="/blog_details" element={<BlogDetails/>}/>
             </Routes>
         </BrowserRouter>
                     )
