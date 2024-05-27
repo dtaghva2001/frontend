@@ -4,16 +4,14 @@ import React, {useEffect, useState} from "react";
 import {useLocation, useNavigate} from 'react-router-dom';
 import {Button, Container, Grid, TextField, Typography} from "@mui/material";
 import {MyNavBar} from "../../components/MyNavBar";
+import {urls} from "../../urls/urls";
 
 
 const SignUpAndLogin = () => {
-
-    const linkToLoginPage = "/login"; //todo
-    const linkToRegisterPage = "/sign-up"; //todo
     const [pageState, setPageState] = useState('login')
     const navigate = useNavigate()
     const location = useLocation()
-
+    const isInfoWrong = useState(false)
     useEffect(() => {
         if(location.state && location.state.status){
             console.log('page state changed')
@@ -31,21 +29,57 @@ const SignUpAndLogin = () => {
     const handleChange = (e) => {
         setFormData({ ...formData, [e.target.name]: e.target.value });
     };
-
     const handleSubmit = async (e) => {
-        //todo this varies when for the login or register.
-        //honestly, that's just the url.
-        //we dont just implement it. we wait.
-        alert('navigating to the model generator')
-        navigate('/model_generator')
-        // e.preventDefault();
-        // const url = "http://localhost:1234/signUp?formData=" + JSON.stringify(formData) //todo fixing this to be the right backend URL
-        // const res1 = await fetch(url, {
-        //     method: "POST",
-        // })
-        // await alert(res1)
-        // console.log('Form submitted:', formData);
+        e.preventDefault();
+        const url = pageState === 'login' ? urls.login : urls.signUp;
+        console.log(url);
+
+        try {
+            const response = await fetch(url, {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify(formData)
+            });
+
+            if (response.ok) {
+                const data = await response.json();
+                console.log(data.result)
+                console.log('Success:', data);
+            } else {
+                const errorData = await response.json();
+                if (response.status === 404) {
+                    console.error('Response problem:', errorData.result);
+
+                } else {
+                    console.error('Server Error:', errorData.result)
+                }
+            }
+        } catch (error) {
+            console.error('Network Error:', error);
+        }
     };
+
+
+    // const handleSubmit = async (e) => {
+    //     e.preventDefault()
+    //     const url = pageState === 'login' ? urls.login: urls.signUp
+    //     console.log(url)
+    //     await fetch(url, {
+    //         method: 'POST',
+    //         headers: {
+    //             'Content-Type': 'application/json',
+    //         },
+    //         body: JSON.stringify(formData)
+    //     }).then(res => {
+    //         if(res.status === 404)
+    //         {
+    //             console.log('response problem')
+    //         }
+    //
+    //     })
+    // };
 
     function changeStateAndNavigateTo(myStatus)
     {
@@ -121,6 +155,9 @@ const SignUpAndLogin = () => {
                                         pageState === 'sign-up' ? <label>if you have already registered click <b className='text-blue-500' onClick={() => changeStateAndNavigateTo("login")} >
                                             here</b></label> : <label>don't have an account? click <b className='text-blue-500' onClick={() => changeStateAndNavigateTo("sign-up")} >
                                             here</b></label>
+                                    }
+                                    {
+                                        isInfoWrong ? (pageState === 'sign-up' ? <label>username or email already exists!</label> : <label>login failed</label>) : <label>please insert your info completely</label>
                                     }
 
                                 </Grid>
