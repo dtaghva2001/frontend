@@ -1,14 +1,16 @@
 import {useEffect, useState} from "react";
 import { Button, Grid, TextField, Paper } from "@mui/material";
 import { useNavigate } from "react-router-dom";
+import {urls} from "../../urls/urls";
+import { Freeze } from 'react-freeze';
 
 const FieldAndValue = ({ onVarnameChange, onValueChange, id }) => {
-    // Handles the variable name change and passes the new value up
+    //when variable name is changed, calls the onVarnameChange methode
     function whenVarNameChange(event) {
         onVarnameChange(id, event.target.value);
     }
 
-    // Handles the type change and passes the new value up
+    //when value is changed calls the onValueChange methode
     function whenValueChange(event) {
         onValueChange(id, event.target.value);
     }
@@ -25,9 +27,13 @@ const FieldAndValue = ({ onVarnameChange, onValueChange, id }) => {
     );
 };
 
+
 const ModelGenerator = () => {
     const [modelName, setModelName] = useState("");
     const [variables, setVariables] = useState([{ name: '', type: '' }]);
+    const [programmingLang, setProgrammingLang] = useState("")
+
+
     useEffect(() => {
         console.log(variables)
         }
@@ -37,7 +43,42 @@ const ModelGenerator = () => {
     function addField() {
         setVariables([...variables, { name: '', type: '' }]);
     }
+    async function submitModel() {
+        const myProgrammingLang = programmingLang
+        let url
+        switch (myProgrammingLang)
+        {
+            case "python":
+                url = urls.generate_model_django;
+                break;
+            case "php":
+                url = urls.generate_model_php;
+                break;
+            default:
+                url = urls.generate_model_express;
+                break;
+        }
 
+        const myObj = {
+            "name": modelName,
+            "variables": variables
+        }
+        const response = await fetch(url, {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify(myObj)
+        })
+        console.log(`res: ${response}`)
+
+        console.log(response.status)
+        const responseJSON = await response.json();
+        console.log(responseJSON)
+        // console.log(JSON.parse(await response.json()))
+        // navigate(urls.get_response, {})
+        // navigate(urls.get_response())
+    }
     const changVarname = (id, newName) => {
         const newVariables = variables.map((variable, index) => {
             if (index === id) {
@@ -72,10 +113,14 @@ const ModelGenerator = () => {
                     Add Field
                 </Button>
             </Grid>
+            <Grid item xs={12}>
+                <Paper>programming language</Paper>
+                <TextField onChange={(event) => setProgrammingLang(event.target.value)}/>
+            </Grid>
             {variables.map((object, index) => (
                 <FieldAndValue key={index} onVarnameChange={changVarname} onValueChange={changeValue} id={index} />
             ))}
-            <Button fullWidth >
+            <Button fullWidth onClick={submitModel}>
                 Submit
             </Button>
         </Grid>
