@@ -5,5 +5,6 @@ export const urls = {
     generate_model_express: baseUrl + 'generate_model_express',
     generate_model_django: baseUrl + 'generate_model_django',
     generate_model_php: baseUrl + 'generate_model_php',
-    get_response: baseUrl + 'myResult'
+    get_response: baseUrl + 'myResult',
+    chatGPTresponse: baseUrl + 'generate_api'
 }

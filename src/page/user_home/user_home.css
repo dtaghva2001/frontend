@@ -1,0 +1,10 @@
+#big-div{
+    width: 33%;
+    height: 100vh;
+    background-color: green;
+}
+#big-div-2{
+    width: 33%;
+    height: 100vh;
+    background-color: yellow;
+}

@@ -49,12 +49,9 @@ const SignUpAndLogin = () => {
                 console.log('Success:', data);
             } else {
                 const errorData = await response.json();
-                if (response.status === 404) {
-                    console.error('Response problem:', errorData.result);
+                console.log("error:" + errorData)
 
-                } else {
-                    console.error('Server Error:', errorData.result)
-                }
+
             }
         } catch (error) {
             console.error('Network Error:', error);

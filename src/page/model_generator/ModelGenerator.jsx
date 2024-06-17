@@ -75,9 +75,12 @@ const ModelGenerator = () => {
         console.log(response.status)
         const responseJSON = await response.json();
         console.log(responseJSON)
-        // console.log(JSON.parse(await response.json()))
-        // navigate(urls.get_response, {})
-        // navigate(urls.get_response())
+        // console.log(responseJSON.modelID)
+        navigate('/download', {
+            state: {
+                status: responseJSON.modelID
+            }
+        })
     }
     const changVarname = (id, newName) => {
         const newVariables = variables.map((variable, index) => {
