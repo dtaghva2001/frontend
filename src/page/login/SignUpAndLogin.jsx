@@ -5,13 +5,12 @@ import {useLocation, useNavigate} from 'react-router-dom';
 import {Button, Container, Grid, TextField, Typography} from "@mui/material";
 import {MyNavBar} from "../../components/MyNavBar";
 import {urls} from "../../urls/urls";
-
-
+import './SignUpAndLogin.css'
 const SignUpAndLogin = () => {
     const [pageState, setPageState] = useState('login')
     const navigate = useNavigate()
     const location = useLocation()
-    const isInfoWrong = useState(false)
+    const isInfoWrong = useState(true)
     useEffect(() => {
         if(location.state && location.state.status){
             console.log('page state changed')
@@ -46,37 +45,18 @@ const SignUpAndLogin = () => {
             if (response.ok) {
                 const data = await response.json();
                 console.log(data.result)
-                console.log('Success:', data);
+                console.log('success:', data);
+                navigate('/model_generator')
+
             } else {
                 const errorData = await response.json();
                 console.log("error:" + errorData)
 
-
             }
         } catch (error) {
-            console.error('Network Error:', error);
+            console.error('error:', error);
         }
     };
-
-
-    // const handleSubmit = async (e) => {
-    //     e.preventDefault()
-    //     const url = pageState === 'login' ? urls.login: urls.signUp
-    //     console.log(url)
-    //     await fetch(url, {
-    //         method: 'POST',
-    //         headers: {
-    //             'Content-Type': 'application/json',
-    //         },
-    //         body: JSON.stringify(formData)
-    //     }).then(res => {
-    //         if(res.status === 404)
-    //         {
-    //             console.log('response problem')
-    //         }
-    //
-    //     })
-    // };
 
     function changeStateAndNavigateTo(myStatus)
     {
@@ -88,10 +68,9 @@ const SignUpAndLogin = () => {
     }
 
     return (
-        <>
+        <div id={"div-with-background"}>
             <MyNavBar/>
             <Container maxWidth="xs">
-
                 <Grid container spacing={2} justifyContent="center" alignItems="center" direction="column" style={{ minHeight: '100vh' }}>
                     <Grid item>
                         <Typography variant="h4" component="h1">
@@ -154,16 +133,15 @@ const SignUpAndLogin = () => {
                                             here</b></label>
                                     }
                                     {
-                                        isInfoWrong ? (pageState === 'sign-up' ? <label>username or email already exists!</label> : <label>login failed</label>) : <label>please insert your info completely</label>
+                                        // isInfoWrong ? (pageState === 'sign-up' ? <label>username or email already exists!</label> : <label>login failed</label>) : <label>.</label>
                                     }
-
                                 </Grid>
                             </Grid>
                         </form>
                     </Grid>
                 </Grid>
             </Container>
-        </>
+        </div>
 
     );
 }
