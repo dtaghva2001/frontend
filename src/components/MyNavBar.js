@@ -1,7 +1,7 @@
 import {AppBar, Button, Toolbar, Typography} from "@mui/material";
 import {useNavigate} from "react-router-dom";
 import HomeIcon from '@mui/icons-material/Home';
-import {useState} from "react";
+
 export const MyNavBar = () => {
     const navigate = useNavigate()
     function navigateTo(link, stn){

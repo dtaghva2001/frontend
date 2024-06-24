@@ -1,23 +1,21 @@
-import React, {useEffect, useState} from "react";
-// import  {useState} from "@types/react";
-// import {useState} from "react";
-import {useLocation, useNavigate} from 'react-router-dom';
-import {Button, Container, Grid, TextField, Typography} from "@mui/material";
-import {MyNavBar} from "../../components/MyNavBar";
-import {urls} from "../../urls/urls";
-import './SignUpAndLogin.css'
-const SignUpAndLogin = () => {
-    const [pageState, setPageState] = useState('login')
-    const navigate = useNavigate()
-    const location = useLocation()
-    const isInfoWrong = useState(true)
-    useEffect(() => {
-        if(location.state && location.state.status){
-            console.log('page state changed')
-            setPageState(location.state.status)
-        }
+import React, { useEffect, useState } from "react";
+import { useLocation, useNavigate } from 'react-router-dom';
+import {Button, Container, Grid, TextField, Typography, Paper, Box} from "@mui/material";
+import { MyNavBar } from "../../components/MyNavBar";
+import { urls } from "../../urls/urls";
+import './SignUpAndLogin.css';
 
-    },[location.state])
+const SignUpAndLogin = () => {
+    const [pageState, setPageState] = useState('login');
+    const navigate = useNavigate();
+    const location = useLocation();
+    const [isInfoWrong, setIsInfoWrong] = useState(false);
+
+    useEffect(() => {
+        if (location.state && location.state.status) {
+            setPageState(location.state.status);
+        }
+    }, [location.state]);
 
     const [formData, setFormData] = useState({
         username: '',
@@ -28,10 +26,10 @@ const SignUpAndLogin = () => {
     const handleChange = (e) => {
         setFormData({ ...formData, [e.target.name]: e.target.value });
     };
+
     const handleSubmit = async (e) => {
         e.preventDefault();
         const url = pageState === 'login' ? urls.login : urls.signUp;
-        console.log(url);
 
         try {
             const response = await fetch(url, {
@@ -44,105 +42,112 @@ const SignUpAndLogin = () => {
 
             if (response.ok) {
                 const data = await response.json();
-                console.log(data.result)
-                console.log('success:', data);
-                navigate('/model_generator')
-
+                navigate('/model_generator');
             } else {
-                const errorData = await response.json();
-                console.log("error:" + errorData)
-
+                setIsInfoWrong(true);
             }
         } catch (error) {
-            console.error('error:', error);
+            console.error('Error:', error);
+            setIsInfoWrong(true);
         }
     };
 
-    function changeStateAndNavigateTo(myStatus)
-    {
+    const changeStateAndNavigateTo = (status) => {
         navigate('/login', {
-            state: {
-                status: myStatus
-            }
-        })
-    }
+            state: { status }
+        });
+    };
 
     return (
-        <div id={"div-with-background"}>
-            <MyNavBar/>
-            <Container maxWidth="xs">
-                <Grid container spacing={2} justifyContent="center" alignItems="center" direction="column" style={{ minHeight: '100vh' }}>
-                    <Grid item>
-                        <Typography variant="h4" component="h1">
-                            {pageState}
-                        </Typography>
-                    </Grid>
-                    <Grid item>
-                        <form onSubmit={handleSubmit}>
-                            <Grid container spacing={2}>
-                                <Grid item xs={12}>
-                                    <TextField
-                                        label="Username"
-                                        name="username"
-                                        value={formData.username}
-                                        onChange={handleChange}
-                                        fullWidth
-                                        required
-                                    />
-
-                                </Grid>
-                                {
-                                    pageState === "sign-up" &&
+        <div className="sign-up-login-container">
+            <MyNavBar />
+            <Container maxWidth="sm">
+                <Box display="flex" justifyContent="center" alignItems="center" minHeight="100vh">
+                    <Paper elevation={3} style={{ padding: '20px', marginTop: '20px' }}>
+                        <Grid container spacing={3} direction="column" alignItems="center">
+                            <Grid item>
+                                <Typography variant="h4" component="h1">
+                                {pageState === 'login' ? 'Login' : 'Sign Up'}
+                                </Typography>
+                            </Grid>
+                        <Grid item>
+                            <form onSubmit={handleSubmit}>
+                                <Grid container spacing={2}>
                                     <Grid item xs={12}>
                                         <TextField
-                                            label="Email"
-                                            name="email"
-                                            type="email"
-                                            value={formData.email}
+                                            label="Username"
+                                            name="username"
+                                            value={formData.username}
                                             onChange={handleChange}
                                             fullWidth
                                             required
                                         />
                                     </Grid>
-
-                                }
-
-                                <Grid item xs={12}>
-                                    <TextField
-                                        label="Password"
-                                        name="password"
-                                        type="password"
-                                        value={formData.password}
-                                        onChange={handleChange}
-                                        fullWidth
-                                        required
-                                    />
-                                </Grid>
-                                <Grid item xs={12}>
-                                    <Button type="submit" variant="contained" color="primary" fullWidth>
-                                        {
-                                            pageState === 'login' ? 'login' : 'sign up'
-                                        }
-
-                                    </Button>
-                                </Grid>
-                                <Grid item xs={12}>
-                                    {
-                                        pageState === 'sign-up' ? <label>if you have already registered click <b className='text-blue-500' onClick={() => changeStateAndNavigateTo("login")} >
-                                            here</b></label> : <label>don't have an account? click <b className='text-blue-500' onClick={() => changeStateAndNavigateTo("sign-up")} >
-                                            here</b></label>
-                                    }
-                                    {
-                                        // isInfoWrong ? (pageState === 'sign-up' ? <label>username or email already exists!</label> : <label>login failed</label>) : <label>.</label>
-                                    }
-                                </Grid>
+                                    {pageState === 'sign-up' && (
+                                        <Grid item xs={12}>
+                                            <TextField
+                                                label="Email"
+                                                name="email"
+                                                type="email"
+                                                value={formData.email}
+                                                onChange={handleChange}
+                                                fullWidth
+                                                required
+                                            />
+                                        </Grid>
+                                    )}
+                                    <Grid item xs={12}>
+                                        <TextField
+                                            label="Password"
+                                            name="password"
+                                            type="password"
+                                            value={formData.password}
+                                            onChange={handleChange}
+                                            fullWidth
+                                            required
+                                        />
+                                    </Grid>
+                                    <Grid item xs={12}>
+                                        <Button type="submit" variant="contained" color="primary" fullWidth>
+                                            {pageState === 'login' ? 'Login' : 'Sign Up'}
+                                        </Button>
+                                    </Grid>
+                                    <Grid item xs={12}>
+                                        <Typography variant="body2">
+                                            {pageState === 'sign-up' ? (
+                                                <span>
+                                                    Already have an account?{' '}
+                                                    <b className="text-blue" onClick={() => changeStateAndNavigateTo("login")}>
+                                                        Login here
+                                                    </b>
+                                                </span>
+                                            ) : (
+                                                <span>
+                                                    Don't have an account?{' '}
+                                                    <b className="text-blue-500" onClick={() => changeStateAndNavigateTo("sign-up")}>
+                                                        Sign Up here
+                                                    </b>
+                                                </span>
+                                            )}
+                                        </Typography>
+                                    </Grid>
+                                    {/*!if information is WRONG And the backend sent an error*/}
+                                    {isInfoWrong && (
+                                        <Grid item xs={12}>
+                                            <Typography color="error">
+                                                {pageState === 'sign-up' ? 'Username or email already exists!' : 'Login failed'}
+                                            </Typography>
+                                        </Grid>
+                                    )}
+                                    </Grid>
+                                </form>
                             </Grid>
-                        </form>
-                    </Grid>
-                </Grid>
+                        </Grid>
+                    </Paper>
+                </Box>
             </Container>
         </div>
-
     );
-}
+};
+
 export default SignUpAndLogin;

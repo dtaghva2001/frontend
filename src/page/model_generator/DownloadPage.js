@@ -8,10 +8,23 @@ const DownloadPage = () => {
     const location = useLocation();
     const { status } = location.state || {};
     const [code, setCode] = useState("")
-    const url = urls.get_response
+    const url = urls.download
     function changeCode(e) {
         setCode(e.target.value)
 
+    }
+    async function downloadCode(e) {
+        e.preventDefault()
+        const url1 = urls.download;
+        console.log('hello')
+        const response = await fetch(url1, {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify({"hello": "world"})
+        });
+        console.log('bye')
     }
 
     return (
@@ -34,16 +47,7 @@ const DownloadPage = () => {
                         variant="contained"
                         color="primary"
                         fullWidth
-                        onClick={async () => {
-                            const response = await fetch(url, {
-                                method: 'POST',
-                                headers: {
-                                    'Content-Type': 'application/json',
-                                },
-                                body: JSON.stringify(status)
-                            });
-                            //downloaded the file.
-                        }}
+                        onClick={downloadCode}
                     >
                         Download
                     </Button>
