@@ -14,17 +14,29 @@ const FieldAndValue = ({ onVarnameChange, onValueChange, id }) => {
     function whenValueChange(event) {
         onValueChange(id, event.target.value);
     }
-
     return (
-        <>
+        <Grid container spacing={2}>
             <Grid item xs={6}>
-                <TextField fullWidth label="Variable Name" variant="outlined" onChange={whenVarNameChange} />
+                <TextField
+                    fullWidth
+                    label="Variable Name"
+                    variant="outlined"
+                    onChange={whenVarNameChange}
+                    sx={{ marginBottom: 2 }}
+                />
             </Grid>
             <Grid item xs={6}>
-                <TextField fullWidth label="Type" variant="outlined" onChange={whenValueChange} />
+                <TextField
+                    fullWidth
+                    label="Type"
+                    variant="outlined"
+                    onChange={whenValueChange}
+                    sx={{ marginBottom: 2 }}
+                />
             </Grid>
-        </>
+        </Grid>
     );
+
 };
 
 
@@ -109,7 +121,7 @@ const ModelGenerator = () => {
         <Grid container alignItems="center" style={{ maxWidth: '60vw', margin: 'auto' }} rowGap={10}>
             <Grid item xs={12}>
                 <Paper style={{ padding: '10px', textAlign: 'center' }}>Model Name</Paper>
-                <TextField fullWidth value={modelName} onChange={(event) => setModelName(event.target.value)} />
+                <TextField fullWidth value={modelName} variant={"outlined"} onChange={(event) => setModelName(event.target.value)} />
             </Grid>
             <Grid item xs={12}>
                 <Button onClick={addField} fullWidth>
@@ -118,7 +130,9 @@ const ModelGenerator = () => {
             </Grid>
             <Grid item xs={12}>
                 <Paper>programming language</Paper>
-                <TextField onChange={(event) => setProgrammingLang(event.target.value)}/>
+                <TextField
+                    variant={"outlined"}
+                    onChange={(event) => setProgrammingLang(event.target.value)}/>
             </Grid>
             {variables.map((object, index) => (
                 <FieldAndValue key={index} onVarnameChange={changVarname} onValueChange={changeValue} id={index} />

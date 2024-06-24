@@ -70,10 +70,10 @@ const SignUpAndLogin = () => {
                                 {pageState === 'login' ? 'Login' : 'Sign Up'}
                                 </Typography>
                             </Grid>
-                        <Grid item>
-                            <form onSubmit={handleSubmit}>
-                                <Grid container spacing={2}>
-                                    <Grid item xs={12}>
+                            <Grid item>
+                                <form onSubmit={handleSubmit}>
+                                    <Grid container spacing={2}>
+                                        <Grid item xs={12}>
                                         <TextField
                                             label="Username"
                                             name="username"
