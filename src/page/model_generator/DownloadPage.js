@@ -1,13 +1,16 @@
 import React, {useState} from 'react';
 import { useLocation } from "react-router-dom";
-import { Button, Container, Grid, TextField } from "@mui/material";
+import {Alert, Button, Container, Grid, TextField} from "@mui/material";
 import './DownloadPage.css';
 import {urls} from "../../urls/urls";
 
 const DownloadPage = () => {
     const location = useLocation();
-    const { status } = location.state || {};
-    const [code, setCode] = useState("")
+    //this line of code means 3 things
+    //if location.state exists then use it
+    //otherwise set the status to 1
+    const status = location.state ? location.state.status : 1;
+    const [code, setCode] = useState("1")
     const url = urls.download
     function changeCode(e) {
         setCode(e.target.value)
@@ -16,15 +19,29 @@ const DownloadPage = () => {
     async function downloadCode(e) {
         e.preventDefault()
         const url1 = urls.download;
-        console.log('hello')
-        const response = await fetch(url1, {
-            method: 'POST',
-            headers: {
-                'Content-Type': 'application/json',
-            },
-            body: JSON.stringify({"hello": "world"})
-        });
-        console.log('bye')
+        try{
+            console.log('status: ' + status)
+            const response = await fetch(url1, {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+
+                body: JSON.stringify({"statusCode": status})
+            });
+            let blob = await response.blob();
+            const downloadUrl = window.URL.createObjectURL(blob);
+            const link = document.createElement('a');
+            link.href = downloadUrl;
+            link.download = `${status}.js`;
+            document.body.appendChild(link);
+            link.click();
+            link.remove();
+            window.URL.revokeObjectURL(downloadUrl);
+
+        }catch (e) {
+            console.log('error')
+        }
     }
 
     return (
