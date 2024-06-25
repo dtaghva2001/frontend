@@ -1,3 +1,4 @@
+import * as PropTypes from "prop-types";
 
 const Answer = (props) => {
     return (
@@ -36,6 +37,27 @@ const dummyQuestion = {
         }
     ]
 }
+const dummyPost = {
+    title: "center a div in react",
+    writer: "ME",
+    comments: {
+        writer:"YOU",
+        content: "where is the content?"
+    }
+
+}
+
+function Post(props) {
+    return (
+        <div>
+            <h2>BLOG POST</h2>
+            <p>{props.title}</p>
+            <p>{props.writer}</p>
+        </div>
+    );
+}
+
+Post.propTypes = {title: PropTypes.string};
 export const TechBlog = () => {
     return(
         <div>
@@ -43,6 +65,13 @@ export const TechBlog = () => {
                 title={dummyQuestion.title}
                 description = {dummyQuestion.description}
                 answers = {dummyQuestion.answers}/>
+            <Post
+                title={dummyPost.title}
+                writer = {dummyPost.writer}
+                comments = {dummyPost.comments}
+                />
+
+
         </div>
     )
 }
