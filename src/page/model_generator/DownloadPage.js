@@ -7,7 +7,7 @@ import {urls} from "../../urls/urls";
 const DownloadPage = () => {
     const location = useLocation();
     //this line of code means 3 things
-    //if location.state exists then use it
+    //if location.state.status exists then use it
     //otherwise set the status to 1
     const status = location.state ? location.state.status : 1;
     const [code, setCode] = useState("1")

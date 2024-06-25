@@ -10,6 +10,8 @@ import {BlogDetails} from "./page/home_page/BlogDetails";
 import {ChatGPTGetResponse} from "./page/chatgpt_response/ChatGPTGetResponse";
 import {CssBaseline, ThemeProvider} from "@mui/material";
 import {dark_theme} from "./theme/dark_theme";
+import {TechBlog} from "./page/tech-blog/TechBlog";
+import {AddPost} from "./page/tech-blog/AddPost";
 //
 const App = () => {
     return (
@@ -21,8 +23,8 @@ const App = () => {
                     <Route path="/model_generator" element={<ModelGenerator/>}/>
                     <Route path="/download" element={<DownloadPage />} />
                     <Route path="/get_response" element={<ChatGPTGetResponse />}/>
-                    {/*<Route path="/" element={<HomePage/>}/>*/}
-                    {/*<Route path="/blog_details" element={<BlogDetails/>}/>*/}
+                    <Route path="/blog" element={<TechBlog />} />
+                    <Route path="add_post" element={<AddPost/>}/>
                 </Routes>
             </BrowserRouter>
 
