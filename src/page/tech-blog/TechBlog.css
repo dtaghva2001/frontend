@@ -1,0 +1,23 @@
+.Answer{
+    border: 1px solid #333A73;
+    padding: 15px;
+    border-radius: 50px;
+    margin-top: 15px;
+    background-color: #FBA834;
+    text-align: left;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1)
+}
+.Question{
+    border: 1px solid #333A73;
+    padding: 15px;
+    border-radius: 50px;
+    margin-top: 15px;
+    background-color: #333A73;
+    text-align: center;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1)
+}
+h3{
+    text-align: left;
+    margin-bottom: 10px;
+    color: #333;
+}

@@ -1,18 +1,21 @@
-import * as PropTypes from "prop-types";
-
+import './TechBlog.css'
+import QuestionAnswerIcon from '@mui/icons-material/QuestionAnswer';
+import QuestionMarkIcon from '@mui/icons-material/QuestionMark';
 const Answer = (props) => {
     return (
-        <div style={{ border: '1px solid #ddd', padding: '10px', borderRadius: '5px', marginTop: '10px', backgroundColor: '#fff' }}>
+        <div className={'Answer'}>
             <p>{props.data}</p>
+            <QuestionAnswerIcon/>
             <p>Answered by: {props.writer}</p>
         </div>
     );
 };
 const Question = (props) => {
     return(
-        <div>
+        <div className={"Question"}>
             <h1>{props.title}</h1>
             <p>{props.description}</p>
+            <QuestionMarkIcon/>
             <h3>Answers</h3>
             {
                 props.answers.map((answer, index) => (
@@ -57,7 +60,7 @@ function Post(props) {
     );
 }
 
-Post.propTypes = {title: PropTypes.string};
+
 export const TechBlog = () => {
     return(
         <div>
